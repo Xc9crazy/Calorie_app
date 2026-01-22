@@ -30,19 +30,17 @@ if($delete_user_id == $current_user_id){
     exit();
 }
 
-// 権限チェック：管理者のみ他のユーザーを削除可能
-// 現在の実装では、一般ユーザーは他人を削除できないようにする
 header("Location: users_list.php?error=permission");
 exit();
 
 /*
-// 将来的に管理者機能を実装する場合は以下のコードを使用
+// 僕が時間があれば追加したい機能を置いておく
 
 try {
-    // トランザクション開始
+
     $pdo->beginTransaction();
 
-    // 削除対象のユーザー情報取得
+    
     $check_sql = "SELECT id, username FROM users WHERE id = ?";
     $check_stmt = $pdo->prepare($check_sql);
     $check_stmt->execute([$delete_user_id]);
@@ -54,7 +52,6 @@ try {
         exit();
     }
 
-    // ユーザー削除（CASCADE設定により関連する meals も自動削除）
     $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
     $result = $stmt->execute([$delete_user_id]);
 

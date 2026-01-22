@@ -1,5 +1,5 @@
 <?php
-// セッションが開始されていない場合のみ開始
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -7,7 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 header("Content-Type: text/html; charset=UTF-8");
 require "db.php";
 
-/* 未ログインならログイン画面へ */
+
 if(!isset($_SESSION['user_id'])){
     header("Location: login.php");
     exit();
@@ -15,12 +15,11 @@ if(!isset($_SESSION['user_id'])){
 
 $current_user_id = $_SESSION['user_id'];
 
-// メッセージ取得
+
 $message = $_GET['message'] ?? '';
 $error = $_GET['error'] ?? '';
 
 try {
-    // 自分の情報のみ取得
     $sql = "SELECT id, username, height, weight, age, gender, 
                    activity_level, goal, created_at 
             FROM users WHERE id = ?";
@@ -34,12 +33,12 @@ try {
     $users = [];
 }
 
-/* htmlspecialchars短縮用 */
+
 function h($str){
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 
-// 日本語表示用関数
+
 function translateGender($gender) {
     return $gender === 'male' ? '男性' : ($gender === 'female' ? '女性' : '-');
 }

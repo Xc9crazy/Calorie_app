@@ -1,5 +1,4 @@
 <?php
-// セッションが開始されていない場合のみ開始
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -22,7 +21,6 @@ if(empty($edit_user_id) || !is_numeric($edit_user_id)){
     exit();
 }
 
-// 権限チェック：自分のプロフィールのみ編集可能
 if($edit_user_id != $current_user_id){
     header("Location: users_list.php?error=permission");
     exit();
@@ -295,7 +293,6 @@ body {
         <form action="user_update.php" method="POST">
             <input type="hidden" name="id" value="<?= h($user['id']) ?>">
 
-            <!-- アカウント情報 -->
             <div class="form-section">
                 <h3>🔐 アカウント情報</h3>
                 
@@ -313,7 +310,6 @@ body {
                 </div>
             </div>
 
-            <!-- 身体情報 -->
             <div class="form-section">
                 <h3>👤 身体情報</h3>
                 
@@ -366,7 +362,6 @@ body {
                 </div>
             </div>
 
-            <!-- 目標設定 -->
             <div class="form-section">
                 <h3>🎯 目標設定</h3>
                 
